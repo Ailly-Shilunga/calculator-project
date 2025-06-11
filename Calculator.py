@@ -3,15 +3,15 @@ import tkinter as tk
 def click(event):
     text = event.widget.cget("text")
     if text == "=":
-        try:
-            result = str(eval(str(screen.get())))
-            screen.set(result)
-        except Exception as e:
-            screen.set("Error")
+        # ...
     elif text == "C":
-        screen.set("")
+        # ...
+    elif text == "sin":
+        import math
+        screen.set(str(math.sin(float(screen.get()))))
+    # Add similar blocks for "cos", "tan", etc.
     else:
-        screen.set(screen.get() + text)
+        screen.set(screen.get() + text)n.get() + text)
 
 root = tk.Tk()
 root.geometry("300x400")
@@ -25,11 +25,14 @@ button_frame = tk.Frame(root)
 button_frame.pack()
 
 buttons = [
+    buttons = [
     ["7", "8", "9", "/"],
     ["4", "5", "6", "*"],
     ["1", "2", "3", "-"],
     ["0", ".", "=", "+"],
-    ["C"]
+    ["sin", "cos", "tan", "log"],
+    ["sqrt", "C"]
+]
 ]
 
 for row in buttons:

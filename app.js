@@ -29,7 +29,8 @@ class CalculatorModel {
       let result;
       const prev = parseFloat(this.previous);
       const curr = parseFloat(this.current);
-      if (isNaN(prev) || isNaN(curr)) return;
+  
+      // For scientific functions, only one operand is needed (prev)
       switch (this.operator) {
         case '+':
           result = prev + curr;
@@ -42,6 +43,22 @@ class CalculatorModel {
           break;
         case '/':
           result = curr === 0 ? 'Error' : prev / curr;
+          break;
+        case 'sin':
+          // Degrees to radians
+          result = Math.sin(prev * Math.PI / 180);
+          break;
+        case 'cos':
+          result = Math.cos(prev * Math.PI / 180);
+          break;
+        case 'tan':
+          result = Math.tan(prev * Math.PI / 180);
+          break;
+        case 'log':
+          result = Math.log10(prev);
+          break;
+        case 'sqrt':
+          result = Math.sqrt(prev);
           break;
         default:
           return;
@@ -82,6 +99,12 @@ class CalculatorModel {
             this.model.appendNumber(value);
           } else if (value === 'C') {
             this.model.clear();
+          } else if (['sin', 'cos', 'tan', 'log', 'sqrt'].includes(value)) {
+            // For scientific functions, use the current as operand
+            this.model.operator = value;
+            this.model.previous = this.model.current;
+            this.model.current = '';
+            this.model.compute();
           } else {
             this.model.chooseOperator(value);
           }
